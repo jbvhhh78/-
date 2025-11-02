@@ -9,7 +9,7 @@ if not success then
     warn("脚本加载失败: " .. err)
 end
 
-local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/jbvhhh78/-/af9f11f4693b4001a44968065c7ba0bb2e45bf3b/%E5%AD%90%E8%84%9A%E6%9C%AC.lua"))()
 
 WindUI.TransparencyValue = 0.3
 WindUI:SetTheme("Dark")
