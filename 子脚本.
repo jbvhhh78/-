@@ -1,14 +1,41 @@
--- 尝试这些格式：
-loadstring(game:HttpGet("https://raw.githubusercontent.com/jbvhhh78/-/main/ZiScript.lua", true))()
-
--- 或者添加错误处理：
-local success, err = pcall(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/jbvhhh78/-/main/ZiScript.lua", true))()
-end)
-
-if not success then
-    warn("脚本加载失败: " .. err)
+local function loadZiScript()
+    local url = "https://raw.githubusercontent.com/jbvhhh78/-/af9f11f4693b4001a44968065c7ba0bb2e45bf3b/%E5%AD%90%E8%84%9A%E6%9C%AC.lua"
+    
+    print("开始加载子脚本...")
+    print("URL:", url)
+    
+    -- 第一步：获取内容
+    local success, content = pcall(function()
+        return game:HttpGet(url, true)
+    end)
+    
+    if not success then
+        warn("❌ 获取脚本内容失败:", content)
+        return false
+    end
+    
+    print("✅ 获取内容成功，长度:", #content)
+    
+    if #content < 10 then
+        warn("❌ 脚本内容过短，可能文件不存在或为空")
+        return false
+    end
+    
+    -- 第二步：执行脚本
+    local success, err = pcall(function()
+        loadstring(content)()
+    end)
+    
+    if not success then
+        warn("❌ 执行脚本失败:", err)
+        return false
+    else
+        print("🎉 子脚本执行成功！")
+        return true
+    end
 end
+
+loadZiScript()
 
 local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
 
