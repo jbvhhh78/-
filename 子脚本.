@@ -1,0 +1,428 @@
+local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+
+WindUI.TransparencyValue = 0.3
+WindUI:SetTheme("Dark")
+
+-- 初始欢迎弹窗
+WindUI:Popup({
+    Title = "欢迎使用子脚本",
+    Icon = "sparkles",
+    Content = "尊贵的子脚本用户 "..game.Players.LocalPlayer.Name..", 测试",
+    Buttons = {
+        {
+            Title = "启动",
+            Icon = "arrow-right",
+            Variant = "Primary",
+            Callback = function() 
+                print("脚本已启动")
+            end
+        }
+    }
+})
+
+wait(10)
+
+-- 创建主窗口
+local Window = WindUI:CreateWindow({
+    Title = "子脚本", 
+    Icon = "star", 
+    Author = "尊贵的 "..game.Players.LocalPlayer.Name.."，欢迎使用子脚本", 
+    Folder = "WindUI_Example", 
+    Size = UDim2.fromOffset(400, 250), 
+    Background = "rbxassetid://16750449550", 
+    Theme = "Dark",
+    
+    User = {
+        Enabled = true, 
+        Anonymous = false, 
+        Callback = function() 
+            WindUI:Notify({
+                Title = "点吧",
+                Content = "不是你真点啊",
+                Duration = 3
+            })
+        end
+    },
+    SideBarWidth = 200,
+    ScrollBarEnabled = false 
+})
+
+-- 添加标签
+窗口：标记({
+title="v1.0"，
+color=Color3.fromHex("#30ff6a")
+})
+
+窗口：标记({
+title="正式版"，
+color=Color3.fromHex("#315dff")
+})
+
+本地TimeTag=窗口：标记({
+title="马上更新"，
+color=Color3.fromHex("#000000")
+})
+
+-- 创建标签页
+本地选项卡={
+game=Window:Section({Title="面板"，icon="user"，Opened=true})
+}
+
+本地TabHandles={
+GameSettings=Tabs.Game:Tab({Title="主要"，图标="user"})，
+scripts=Tabs.Game:Tab({Title="脚本"，图标="代码"})，
+JibaSettings=Tabs.Game:Tab({Title="关于作者"，图标="info"})，
+UiSettings=Tabs.Game:Tab({Title="UI设置"，图标="设置"})，
+    YinyueSettings = Tabs.Game:Tab({ Title = "播放音乐", Icon = "music" }),
+}
+
+-- 主要设置标签
+TabHandles.GameSettings:Paragraph({
+    Title = "帮助作者完成一件事情领取一元奖励",
+    Desc = "作者：子杨",
+    Image = "Settings",
+    ImageSize = 20,
+    Color = "White"
+})
+
+-- 脚本功能
+local function loadExternalScript(url, key, value, scriptName)
+    WindUI:Notify({
+        Title = "提示",
+        Content = "正在加载 " .. scriptName .. "...",
+        Duration = 3
+    })
+    
+    task.spawn(function()
+        local success, err = pcall(function()
+            -- 设置环境变量
+            if key and value then
+                getgenv()[key] = value
+            end
+            
+            -- 加载脚本
+            local scriptContent = game:HttpGet(url)
+            loadstring(scriptContent)()
+        end)
+        
+        if success then
+            WindUI:Notify({
+                Title = "成功",
+                Content = scriptName .. " 加载完成",
+                Duration = 3
+            })
+        else
+            WindUI:Notify({
+                Title = "失败",
+                Content = scriptName .. " 错误: " .. tostring(err),
+                Duration = 5
+            })
+        end
+    end)
+end
+
+-- 被遗弃脚本
+TabHandles.Scripts:Button({
+    Title = "被遗弃脚本",
+    Desc = "点击启动被遗弃脚本",
+    Value = false,
+    Callback = function()
+        loadExternalScript(
+            "https://raw.githubusercontent.com/Syndromehsh/NOL/refs/heads/main/Nolsaken",
+            "ADittoKey",
+            "NOL_FRERKEY_THISISFOR",
+            "被遗弃脚本"
+        )
+    end
+})
+
+-- 皮脚本
+TabHandles.Scripts:Button({
+    Title = "皮脚本",
+    Desc = "点击启动皮脚本",
+    Value = false,
+    Callback = function()
+        loadExternalScript(
+            "https://raw.githubusercontent.com/xiaopi77/xiaopi77/main/QQ1002100032-Roblox-Pi-script.lua",
+            "XiaoPi",
+            "皮脚本QQ群1002100032",
+            "皮脚本"
+        )
+    end
+})
+
+-- 添加皮脚本内脏与火药按钮到脚本标签页
+TabHandles.Scripts:Button({
+    Title = "皮脚本内脏与火药",
+    Desc = "点击启动皮脚本内脏与火药",
+    Value = false,
+    Callback = function()
+        WindUI:Notify({
+            Title = "提示",
+            Content = "正在加载皮脚本内脏与火药...",
+            Duration = 3
+        })
+        
+        task.spawn(function()
+            local success, err = pcall(function()
+                getgenv().XiaoPi = "皮脚本-内脏与黑火药"
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/xiaopi77/xiaopi77/refs/heads/main/Roblox-Pi-GB-Script.lua"))()
+            end)
+            
+            if success then
+                WindUI:Notify({
+                    Title = "成功",
+                    Content = "脚本加载完成",
+                    Duration = 3
+                })
+            else
+                WindUI:Notify({
+                    Title = "失败",
+                    Content = "错误: " .. tostring(err),
+                    Duration = 5
+                })
+            end
+        end)
+    end
+})
+
+-- 添加更多脚本按钮示例
+TabHandles.Scripts:Button({
+    Title = "复制脚本链接",
+    Desc = "复制脚本GitHub链接",
+    Value = false,
+    Callback = function()
+        setclipboard("https://github.com/Syndromehsh/NOL")
+        WindUI:Notify({
+            Title = "复制成功",
+            Content = "脚本链接已复制到剪贴板",
+            Duration = 3
+        })
+结束
+})
+
+-- 作者信息
+TabHandles.GameSettings：按钮({
+title="访问作者QQ"，
+DESC="点击复制QQ号"，
+值=false，
+callback=函数()
+固定夹板(“3775449458”)
+WindUI：通知({
+title="复制成功"，
+content="QQ号3775449458已复制到剪贴板"，
+持续时间=3
+        })
+结束
+})
+
+TabHandles.GameSettings：按钮({
+title="脚本更新链接"，
+DESC="获取最新版本脚本"，
+值=false，
+callback=函数()
+setclipboard("https://github.com/你的用户名/你的仓库")
+WindUI：通知({
+title="链接已复制"，
+content="脚本链接已复制到剪贴板"，
+持续时间=3
+        })
+结束
+})
+
+-- 关于作者标签
+TabHandles.Jiba设置：段落({
+title="关于作者"，
+DESC="子脚本开发者\nQQ:3775449458\n感谢使用！"，
+image="信息"，
+图像大小=20，
+color="白色"
+})
+
+TabHandles.Jiba设置：按钮({
+title="加入交流群"，
+DESC="获取群号"，
+值=false，
+callback=函数()
+setclipboard("1002100032")
+WindUI：通知({
+title="群号已复制"，
+content="QQ群号1002100032已复制"，
+持续时间=3
+        })
+结束
+})
+
+--UI设置标签
+TabHandles.UiSettings：段落({
+title="设置UI"，
+DESC="自定义界面外观"，
+image="设置"，
+图像大小=20，
+color="白色"
+})
+
+-- 主题选择
+本地主题值={}
+对于名称，成对(WindUI:GetThemes())执行(_I)
+table.insert(主题值，名称)
+结束
+
+本地主题下拉列表=TabHandles.UiSettings：下拉列表({
+title="更改UI颜色"，
+    Multi = false,
+    AllowNone = false,
+    Value = nil,
+    Values = themeValues,
+    Callback = function(theme)
+        WindUI:SetTheme(theme)
+        WindUI:Notify({
+            Title = "主题已切换",
+            Content = "当前主题: " .. theme,
+            Duration = 2
+        })
+    end
+})
+
+themeDropdown:Select(WindUI:GetCurrentTheme())
+
+-- 透明度滑块
+TabHandles.UiSettings:Slider({
+    Title = "界面透明度",
+    Min = 0,
+    Max = 1,
+    Value = 0.3,
+    Callback = function(value)
+WindUI.TransparencyValue=值
+WindUI：通知({
+标题="透明度已更新"，
+内容="当前透明度："..string.format("%.1f"，值)，
+持续时间=1
+        })
+结束
+})
+
+-- 音乐播放标签
+TabHandles.YinyueSettings：段落({
+标题="音乐播放器"，
+DESC="这才是真正的音乐。"，
+图像="音乐"，
+图像大小=20，
+颜色="白色"
+})
+
+-- 音乐列表
+本地音乐列表={
+    {
+标题="哈基米山歌"，
+DESC="哈基米呦南北绿豆"，
+SoundId="rbxassetid://71090232224338"
+    },
+    {
+标题="停止所有音乐"，
+DESC="停止当前播放的音乐"，
+SoundId=nil
+    }
+}
+
+对于_，ipairs中的音乐(musicList)do
+TabHandles.YinyueSettings：按钮({
+标题=音乐.标题，
+DESC=music.Desc，
+值=false，
+回调=函数()
+如果音乐.声音那么
+本地声音=Instance.new(“声音”)
+sound.SoundId=音乐.SoundId
+sound.Volume=0.5--修正音量值(应该在0-1之间)
+sound.Looled=false
+sound.Parent=workspace
+声音：播放()
+                
+WindUI：通知({
+标题="音乐播放"，
+内容="正在播放："..音乐，标题，
+持续时间=2
+                })
+                
+-- 播放结束后自动清理
+sound.Ended：连接(函数()
+声音：销毁()
+结束)
+其他
+-- 停止所有音乐
+对于_，成对声音(工作区：getChildren())do
+如果声音：Isa("声音")，则
+声音：停止()
+声音：销毁()
+结束
+结束
+WindUI：通知({
+标题="音乐已停止"，
+WindUI：通知({
+标题="透明度已更新"，
+内容="当前透明度："..string.format("%.1f"，值)，
+持续时间=1
+WindUI：通知({
+结束
+内容="当前透明度："..string.format("%.1f"，值)，
+
+-- 音乐播放标签
+TabHandles.YinyueSettings：段落({
+标题="音乐播放器"，
+DESC="这才是真正的音乐。"，
+图像="音乐"，
+图像大小=20，
+颜色="白色"
+DESC="这才是真正的音乐。"，
+图像="音乐"，
+-- 音乐列表
+本地音乐列表={
+sound.Ended：连接(函数()
+标题="哈基米山歌"，
+DESC="哈基米呦南北绿豆"，
+SoundId="rbxassetid://71090232224338"
+标题="复制脚本链接"，
+标题="哈基米山歌"，
+标题="停止所有音乐"，
+DESC="停止当前播放的音乐"，
+SoundId=nil
+WindUI：通知({
+标题="停止所有音乐"，
+DESC="停止当前播放的音乐"，
+
+TabHandles.GameSettings：切换({
+结束
+DESC="自动收集附近资源"，
+值=false，
+-- 作者信息
+TabHandles.GameSettings：按钮({
+标题="访问作者QQ"，
+DESC="点击复制QQ号"，
+值=false，
+回调=函数()
+固定夹板(“3775449458”)
+WindUI：通知({
+标题="复制成功"，
+content="QQ号3775449458已复制到剪贴板"，
+持续时间=3
+持续时间=3
+结束
+结束
+结束
+TabHandles.GameSettings：按钮({
+
+DESC="获取最新版本脚本"，
+值=false，
+回调=函数()
+setclipboard("https://github.com/你的用户名/你的仓库")
+WindUI：通知({
+标题="链接已复制"，
+内容="脚本链接已复制到剪贴板"，
+
+-- 脚本加载完成通知
+回调=函数(值)({
+标题="脚本加载完成"，
+WindUI：通知({
+持续时间=5
+})
