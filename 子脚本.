@@ -1,5 +1,5 @@
 local function loadZiScript()
-    local url = "https://raw.githubusercontent.com/jbvhhh78/-/af9f11f4693b4001a44968065c7ba0bb2e45bf3b/%E5%AD%90%E8%84%9A%E6%9C%AC.lua"
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/jbvhhh78/-/af9f11f4693b4001a44968065c7ba0bb2e45bf3b/%E5%AD%90%E8%84%9A%E6%9C%AC.lua"))()
     
     print("开始加载子脚本...")
     print("URL:", url)
