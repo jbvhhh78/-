@@ -1,41 +1,13 @@
-local function loadZiScript()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/jbvhhh78/-/af9f11f4693b4001a44968065c7ba0bb2e45bf3b/%E5%AD%90%E8%84%9A%E6%9C%AC.lua"))()
-    
-    print("开始加载子脚本...")
-    print("URL:", url)
-    
-    -- 第一步：获取内容
-    local success, content = pcall(function()
-        return game:HttpGet(url, true)
-    end)
-    
-    if not success then
-        warn("❌ 获取脚本内容失败:", content)
-        return false
-    end
-    
-    print("✅ 获取内容成功，长度:", #content)
-    
-    if #content < 10 then
-        warn("❌ 脚本内容过短，可能文件不存在或为空")
-        return false
-    end
-    
-    -- 第二步：执行脚本
-    local success, err = pcall(function()
-        loadstring(content)()
-    end)
-    
-    if not success then
-        warn("❌ 执行脚本失败:", err)
-        return false
-    else
-        print("🎉 子脚本执行成功！")
-        return true
-    end
-end
+-- 尝试这些格式：
+loadstring(game:HttpGet("https://raw.githubusercontent.com/jbvhhh78/-/af9f11f4693b4001a44968065c7ba0bb2e45bf3b/%E5%AD%90%E8%84%9A%E6%9C%AC.lua"))()
 
-loadZiScript()
+-- 或者添加错误处理：
+local success, err = pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/jbvhhh78/-/af9f11f4693b4001a44968065c7ba0bb2e45bf3b/%E5%AD%90%E8%84%9A%E6%9C%AC.lua"))()
+
+if not success then
+    warn("脚本加载失败: " .. err)
+end
 
 local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
 
@@ -369,99 +341,99 @@ for _, music in ipairs(musicList) do
         Title = music.Title,
         Desc = music.Desc,
         Value = false,
-callback=函数()
-如果音乐.声音那么
-本地声音=Instance.new("Sound")
-sound.SoundId=音乐.SoundId
-sound.Volume=0.5--修正音量值(应该在0-1之间)
-sound.Looled=false
-sound.Parent=workspace
-声音：播放()
+        Callback = function()
+            if music.SoundId then
+                local sound = Instance.new("Sound")
+                sound.SoundId = music.SoundId
+                sound.Volume = 0.5  -- 修正音量值（应该在0-1之间）
+                sound.Looped = false
+                sound.Parent = workspace
+                sound:Play()
                 
-WindUI：通知({
-title="音乐播放"，
-content="正在播放："..音乐，标题，
-持续时间=2
+                WindUI:Notify({
+                    Title = "音乐播放",
+                    Content = "正在播放: " .. music.Title,
+                    Duration = 2
                 })
                 
--- 播放结束后自动清理
-sound.Ended:Connect(函数()
-声音：销毁()
-结束)
-其他
--- 停止所有音乐
-对于_，成对声音(工作区：GetChildren())do
-如果声音：Isa(“声音”)，则
-声音：停止()
-声音：销毁()
-结束
-结束
-WindUI：通知({
-title="音乐已停止"，
-content="所有音乐播放已停止"，
-持续时间=2
-}
-结束
-结束
+                -- 播放结束后自动清理
+                sound.Ended:Connect(function()
+                    sound:Destroy()
+                end)
+            else
+                -- 停止所有音乐
+                for _, sound in pairs(workspace:GetChildren()) do
+                    if sound:IsA("Sound") then
+                        sound:Stop()
+                        sound:Destroy()
+                    end
+                end
+                WindUI:Notify({
+                    Title = "音乐已停止",
+                    Content = "所有音乐播放已停止",
+                    Duration = 2
+                })
+            end
+        end
     })
-结束
+end
 
 -- 游戏功能
-TabHandles.GameSettings：按钮({
-title="一键传送"，
-DESC="传送到安全区域"，
-值=false，
-callback=函数()
-本地角色=game.Players.LocalPlayer.Character
-如果字符和字符：FindFirstChild("HumanoidRootPart")，则
-character.HumanoidRootPart.CFrame=CFrame.new(0，100，0)--示例坐标
-WindUI：通知({
-title="传送成功"，
-content="已传送到安全区域"，
-持续时间=3
+TabHandles.GameSettings:Button({
+    Title = "一键传送",
+    Desc = "传送到安全区域",
+    Value = false,
+    Callback = function()
+        local character = game.Players.LocalPlayer.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+            character.HumanoidRootPart.CFrame = CFrame.new(0, 100, 0)  -- 示例坐标
+            WindUI:Notify({
+                Title = "传送成功",
+                Content = "已传送到安全区域",
+                Duration = 3
             })
-其他
-WindUI：通知({
-title="传送失败"，
-content="角色不存在或无法传送"，
-持续时间=3
+        else
+            WindUI:Notify({
+                Title = "传送失败",
+                Content = "角色不存在或无法传送",
+                Duration = 3
             })
-结束
-结束
+        end
+    end
 })
 
-TabHandles.GameSettings：切换({
-title="自动收集"，
-DESC="自动收集附近资源"，
-值=false，
-callback=函数(值)
-如果值，则
-WindUI：通知({
-title="自动收集已开启"，
-content="开始自动收集资源"，
-持续时间=3
+TabHandles.GameSettings:Toggle({
+    Title = "自动收集",
+    Desc = "自动收集附近资源",
+    Value = false,
+    Callback = function(value)
+        if value then
+            WindUI:Notify({
+                Title = "自动收集已开启",
+                Content = "开始自动收集资源",
+                Duration = 3
             })
-其他
-WindUI：通知({
-title="自动收集已关闭"，
-content="停止自动收集资源"，
-持续时间=3
+        else
+            WindUI:Notify({
+                Title = "自动收集已关闭",
+                Content = "停止自动收集资源",
+                Duration = 3
             })
-结束
-结束
+        end
+    end
 })
 
 -- 后台循环
-派生(函数()
-而真做
-打印("子脚本运行中-作者：子杨")
-等待(5)--改为5秒一次，避免过于频繁
-结束
-结束)
+spawn(function()
+    while true do
+        print("子脚本运行中 - 作者: 子杨")
+        wait(5)  -- 改为5秒一次，避免过于频繁
+    end
+end)
 
 -- 脚本加载完成通知
-WindUI：通知({
-title="脚本加载完成"，
-content="子脚本v1.0已就绪\n作者：子杨QQ:3775449458"，
-持续时间=5
+WindUI:Notify({
+    Title = "脚本加载完成",
+    Content = "子脚本 v1.0 已就绪\n作者: 子杨 QQ: 3775449458",
+    Duration = 5
 })
