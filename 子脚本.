@@ -1,3 +1,15 @@
+-- 尝试这些格式：
+loadstring(game:HttpGet("https://raw.githubusercontent.com/jbvhhh78/-/main/ZiScript.lua", true))()
+
+-- 或者添加错误处理：
+local success, err = pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/jbvhhh78/-/main/ZiScript.lua", true))()
+end)
+
+if not success then
+    warn("脚本加载失败: " .. err)
+end
+
 local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
 
 WindUI.TransparencyValue = 0.3
@@ -48,31 +60,31 @@ local Window = WindUI:CreateWindow({
 })
 
 -- 添加标签
-窗口：标记({
-title="v1.0"，
-color=Color3.fromHex("#30ff6a")
+Window:Tag({
+    Title = "v1.0",
+    Color = Color3.fromHex("#30ff6a")
 })
 
-窗口：标记({
-title="正式版"，
-color=Color3.fromHex("#315dff")
+Window:Tag({
+    Title = "正式版", 
+    Color = Color3.fromHex("#315dff")
 })
 
-本地TimeTag=窗口：标记({
-title="马上更新"，
-color=Color3.fromHex("#000000")
+local TimeTag = Window:Tag({
+    Title = "马上更新",
+    Color = Color3.fromHex("#000000")
 })
 
 -- 创建标签页
-本地选项卡={
-game=Window:Section({Title="面板"，icon="user"，Opened=true})
+local Tabs = {
+    Game = Window:Section({ Title = "面板", Icon = "user", Opened = true })
 }
 
-本地TabHandles={
-GameSettings=Tabs.Game:Tab({Title="主要"，图标="user"})，
-scripts=Tabs.Game:Tab({Title="脚本"，图标="代码"})，
-JibaSettings=Tabs.Game:Tab({Title="关于作者"，图标="info"})，
-UiSettings=Tabs.Game:Tab({Title="UI设置"，图标="设置"})，
+local TabHandles = {
+    GameSettings = Tabs.Game:Tab({ Title = "主要", Icon = "user" }),
+    Scripts = Tabs.Game:Tab({ Title = "脚本", Icon = "code" }),
+    JibaSettings = Tabs.Game:Tab({ Title = "关于作者", Icon = "info"}),
+    UiSettings = Tabs.Game:Tab({ Title = "UI设置", Icon = "settings" }),
     YinyueSettings = Tabs.Game:Tab({ Title = "播放音乐", Icon = "music" }),
 }
 
@@ -198,78 +210,78 @@ TabHandles.Scripts:Button({
             Content = "脚本链接已复制到剪贴板",
             Duration = 3
         })
-结束
+    end
 })
 
 -- 作者信息
-TabHandles.GameSettings：按钮({
-title="访问作者QQ"，
-DESC="点击复制QQ号"，
-值=false，
-callback=函数()
-固定夹板(“3775449458”)
-WindUI：通知({
-title="复制成功"，
-content="QQ号3775449458已复制到剪贴板"，
-持续时间=3
+TabHandles.GameSettings:Button({
+    Title = "访问作者QQ",
+    Desc = "点击复制QQ号",
+    Value = false,
+    Callback = function()
+        setclipboard("3775449458")
+        WindUI:Notify({
+            Title = "复制成功",
+            Content = "QQ号 3775449458 已复制到剪贴板",
+            Duration = 3
         })
-结束
+    end
 })
 
-TabHandles.GameSettings：按钮({
-title="脚本更新链接"，
-DESC="获取最新版本脚本"，
-值=false，
-callback=函数()
-setclipboard("https://github.com/你的用户名/你的仓库")
-WindUI：通知({
-title="链接已复制"，
-content="脚本链接已复制到剪贴板"，
-持续时间=3
+TabHandles.GameSettings:Button({
+    Title = "脚本更新链接",
+    Desc = "获取最新版本脚本",
+    Value = false,
+    Callback = function()
+        setclipboard("https://github.com/你的用户名/你的仓库")
+        WindUI:Notify({
+            Title = "链接已复制",
+            Content = "脚本链接已复制到剪贴板",
+            Duration = 3
         })
-结束
+    end
 })
 
 -- 关于作者标签
-TabHandles.Jiba设置：段落({
-title="关于作者"，
-DESC="子脚本开发者\nQQ:3775449458\n感谢使用！"，
-image="信息"，
-图像大小=20，
-color="白色"
+TabHandles.JibaSettings:Paragraph({
+    Title = "关于作者",
+    Desc = "子脚本开发者\nQQ: 3775449458\n感谢使用！",
+    Image = "Info",
+    ImageSize = 20,
+    Color = "White"
 })
 
-TabHandles.Jiba设置：按钮({
-title="加入交流群"，
-DESC="获取群号"，
-值=false，
-callback=函数()
-setclipboard("1002100032")
-WindUI：通知({
-title="群号已复制"，
-content="QQ群号1002100032已复制"，
-持续时间=3
+TabHandles.JibaSettings:Button({
+    Title = "加入交流群",
+    Desc = "获取群号",
+    Value = false,
+    Callback = function()
+        setclipboard("1002100032")
+        WindUI:Notify({
+            Title = "群号已复制",
+            Content = "QQ群号 1002100032 已复制",
+            Duration = 3
         })
-结束
+    end
 })
 
---UI设置标签
-TabHandles.UiSettings：段落({
-title="设置UI"，
-DESC="自定义界面外观"，
-image="设置"，
-图像大小=20，
-color="白色"
+-- UI设置标签
+TabHandles.UiSettings:Paragraph({
+    Title = "设置UI",
+    Desc = "自定义界面外观",
+    Image = "Settings",
+    ImageSize = 20,
+    Color = "White"
 })
 
 -- 主题选择
-本地主题值={}
-对于名称，成对(WindUI:GetThemes())执行(_I)
-table.insert(主题值，名称)
-结束
+local themeValues = {}
+for name, _ in pairs(WindUI:GetThemes()) do
+    table.insert(themeValues, name)
+end
 
-本地主题下拉列表=TabHandles.UiSettings：下拉列表({
-title="更改UI颜色"，
+local themeDropdown = TabHandles.UiSettings:Dropdown({
+    Title = "更改UI颜色",
     Multi = false,
     AllowNone = false,
     Value = nil,
@@ -293,46 +305,46 @@ TabHandles.UiSettings:Slider({
     Max = 1,
     Value = 0.3,
     Callback = function(value)
-WindUI.TransparencyValue=值
-WindUI：通知({
-标题="透明度已更新"，
-内容="当前透明度："..string.format("%.1f"，值)，
-持续时间=1
+        WindUI.TransparencyValue = value
+        WindUI:Notify({
+            Title = "透明度已更新",
+            Content = "当前透明度: " .. string.format("%.1f", value),
+            Duration = 1
         })
-结束
+    end
 })
 
 -- 音乐播放标签
-TabHandles.YinyueSettings：段落({
-标题="音乐播放器"，
-DESC="这才是真正的音乐。"，
-图像="音乐"，
-图像大小=20，
-颜色="白色"
+TabHandles.YinyueSettings:Paragraph({
+    Title = "音乐播放器",
+    Desc = "这才是真正的音乐。",
+    Image = "Music",
+    ImageSize = 20,
+    Color = "White"
 })
 
 -- 音乐列表
-本地音乐列表={
+local musicList = {
     {
-标题="哈基米山歌"，
-DESC="哈基米呦南北绿豆"，
-SoundId="rbxassetid://71090232224338"
+        Title = "哈基米山歌",
+        Desc = "哈基米呦南北绿豆",
+        SoundId = "rbxassetid://71090232224338"
     },
     {
-标题="停止所有音乐"，
-DESC="停止当前播放的音乐"，
-SoundId=nil
+        Title = "停止所有音乐",
+        Desc = "停止当前播放的音乐",
+        SoundId = nil
     }
 }
 
-对于_，ipairs中的音乐(musicList)do
-TabHandles.YinyueSettings：按钮({
-标题=音乐.标题，
-DESC=music.Desc，
-值=false，
-回调=函数()
+for _, music in ipairs(musicList) do
+    TabHandles.YinyueSettings:Button({
+        Title = music.Title,
+        Desc = music.Desc,
+        Value = false,
+callback=函数()
 如果音乐.声音那么
-本地声音=Instance.new(“声音”)
+本地声音=Instance.new("Sound")
 sound.SoundId=音乐.SoundId
 sound.Volume=0.5--修正音量值(应该在0-1之间)
 sound.Looled=false
@@ -340,89 +352,89 @@ sound.Parent=workspace
 声音：播放()
                 
 WindUI：通知({
-标题="音乐播放"，
-内容="正在播放："..音乐，标题，
+title="音乐播放"，
+content="正在播放："..音乐，标题，
 持续时间=2
                 })
                 
 -- 播放结束后自动清理
-sound.Ended：连接(函数()
+sound.Ended:Connect(函数()
 声音：销毁()
 结束)
 其他
 -- 停止所有音乐
-对于_，成对声音(工作区：getChildren())do
-如果声音：Isa("声音")，则
+对于_，成对声音(工作区：GetChildren())do
+如果声音：Isa(“声音”)，则
 声音：停止()
 声音：销毁()
 结束
 结束
 WindUI：通知({
-标题="音乐已停止"，
-WindUI：通知({
-标题="透明度已更新"，
-内容="当前透明度："..string.format("%.1f"，值)，
-持续时间=1
-WindUI：通知({
+title="音乐已停止"，
+content="所有音乐播放已停止"，
+持续时间=2
+}
 结束
-内容="当前透明度："..string.format("%.1f"，值)，
+结束
+    })
+结束
 
--- 音乐播放标签
-TabHandles.YinyueSettings：段落({
-标题="音乐播放器"，
-DESC="这才是真正的音乐。"，
-图像="音乐"，
-图像大小=20，
-颜色="白色"
-DESC="这才是真正的音乐。"，
-图像="音乐"，
--- 音乐列表
-本地音乐列表={
-sound.Ended：连接(函数()
-标题="哈基米山歌"，
-DESC="哈基米呦南北绿豆"，
-SoundId="rbxassetid://71090232224338"
-标题="复制脚本链接"，
-标题="哈基米山歌"，
-标题="停止所有音乐"，
-DESC="停止当前播放的音乐"，
-SoundId=nil
+-- 游戏功能
+TabHandles.GameSettings：按钮({
+title="一键传送"，
+DESC="传送到安全区域"，
+值=false，
+callback=函数()
+本地角色=game.Players.LocalPlayer.Character
+如果字符和字符：FindFirstChild("HumanoidRootPart")，则
+character.HumanoidRootPart.CFrame=CFrame.new(0，100，0)--示例坐标
 WindUI：通知({
-标题="停止所有音乐"，
-DESC="停止当前播放的音乐"，
+title="传送成功"，
+content="已传送到安全区域"，
+持续时间=3
+            })
+其他
+WindUI：通知({
+title="传送失败"，
+content="角色不存在或无法传送"，
+持续时间=3
+            })
+结束
+结束
+})
 
 TabHandles.GameSettings：切换({
-结束
+title="自动收集"，
 DESC="自动收集附近资源"，
 值=false，
--- 作者信息
-TabHandles.GameSettings：按钮({
-标题="访问作者QQ"，
-DESC="点击复制QQ号"，
-值=false，
-回调=函数()
-固定夹板(“3775449458”)
+callback=函数(值)
+如果值，则
 WindUI：通知({
-标题="复制成功"，
-content="QQ号3775449458已复制到剪贴板"，
+title="自动收集已开启"，
+content="开始自动收集资源"，
 持续时间=3
+            })
+其他
+WindUI：通知({
+title="自动收集已关闭"，
+content="停止自动收集资源"，
 持续时间=3
+            })
 结束
 结束
-结束
-TabHandles.GameSettings：按钮({
+})
 
-DESC="获取最新版本脚本"，
-值=false，
-回调=函数()
-setclipboard("https://github.com/你的用户名/你的仓库")
-WindUI：通知({
-标题="链接已复制"，
-内容="脚本链接已复制到剪贴板"，
+-- 后台循环
+派生(函数()
+而真做
+打印("子脚本运行中-作者：子杨")
+等待(5)--改为5秒一次，避免过于频繁
+结束
+结束)
 
 -- 脚本加载完成通知
-回调=函数(值)({
-标题="脚本加载完成"，
 WindUI：通知({
+title="脚本加载完成"，
+content="子脚本v1.0已就绪\n作者：子杨QQ:3775449458"，
 持续时间=5
 })
