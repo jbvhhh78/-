@@ -1,71 +1,71 @@
-local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+当地的WindUI=loadstring(游戏：HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"本地WindUI=loadstring(游戏：HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
 
-WindUI.TransparencyValue = 0.3
-WindUI:SetTheme("Dark")
+WindUI.TransparencyValue=0.30.3
+WindUI:SetTheme("深色")"深色")
 
-WindUI:Popup({
-    Title = "欢迎使用子脚本",
-    Icon = "sparkles",
-    Content = "尊贵的子脚本用户 "..game.Players.LocalPlayer.Name..", 测试",
-    Buttons = {
+WindUI：弹出窗口({
+标题="欢迎使用子脚本"，"欢迎使用子脚本",
+图标="闪耀"，"闪闪发光",
+内容="尊贵的子脚本用户"..game.Players.LocalPlayer.Name.."，测试"，"尊贵的子脚本用户 "..game.Players.LocalPlayer.Name..", 测试",
+按钮={
         {
-            Title = "启动",
-            Icon = "arrow-right",
-            Variant = "Primary",
-            Callback = function() 
-                print("脚本已启动")
-            end
+标题="启动"，"启动",
+图标="向右箭头"，"向右箭头",
+变体="主要"，"主要",
+回调=功能()
+打印("脚本已启动")"脚本已启动")
+结束结束
         }
     }
 })
 
-wait(10)
+等待(10)10)
 
-local function gradient(text, startColor, endColor)
-    local result = ""
-    for i = 1, #text do
-        local t = (i - 1) / (#text - 1)  
+当地的局部函数渐变(文本、开始颜色、结束颜色)功能渐变(文本、开始颜色、结束颜色)
+本地结果=当地的当地的结果=“”
+对于i=1，#text做为我=
+局部t=(i-1)/(#text-1)当地的T=(i-1)/(#text-1)
         
-        local r = math.floor((startColor.R + (endColor.R - startColor.R) * t) * 255)
-        local g = math.floor((startColor.G + (endColor.G - startColor.G) * t) * 255)
-        local b = math.floor((startColor.B + (endColor.B - startColor.B) * t) * 255)
+局部r=数学地板((startColor.R+(endColor.R-startColor.R)*t)*当地的R=数学地板((startColor.R+(endColor.R-startColor.R)*t)*当地的R=数学地板((startColor.R+(endColor.R-startColor.R)*t)*255)
+局部g=数学.Loor((startColor.G+(endColor.G-startColor.G)*t)*当地的G=数学.floor((startColor.g+(endColor.G-startColor。G)*t)*当地的G=数学.floor((startColor.g+(endColor.G-startColor.G)*t)*255)
+局部b=数学.Loor((startColor.B+(endColor.B-startColor.B)*t)*当地的B=数学.Loor((startColor.B+(endColor.B-startColor。B)*t)*当地的B=数学.loor((startColor.B+(endColor.B-startColor.B)*t)*
         
-        result = result .. string.format('<font color="rgb(%d,%d,%d)">%s</font>', r, g, b, text:sub(i, i))
-    end
-    return result
-end
+result=result..string.format('<font color="rgb(%d，%d，%d)">%s</font>'，r，g，b，text:sub(i，i))'<font color="rgb(%d，%d，%d)">%s</font>'，r，g，b，text:sub(i，i))
+结束结束
+返回结果返回结果
+结束
 
-local Window = WindUI:CreateWindow({
-    Title = "子脚本", 
-    Icon = "star", 
-    Author = "尊贵的 "..game.Players.LocalPlayer.Name.."，欢迎使用子脚本", 
-文件夹="WindUI_Example", 
-size=UDim2.fromOffset(400, 250), 
-背景="rbxassetid://16750449550", 
-主题="深色",
+当地的window=WindUI:CreateWindow({
+标题="子脚本"，"子脚本", 
+图标="星星"，"星星", 
+作者="尊贵的"..game.Players.LocalPlayer.Name.."，欢迎使用子脚本"，"尊贵的 "..game.Players.LocalPlayer.Name.."，欢迎使用子脚本", 
+文件夹="WindUI_Example"，"WindUI_Example", 
+size=UDim2.fromOffset(400，250)，400, 250), 
+背景="rbxassetid://16750449550"，"rbxassetid://16750449550", 
+主题="深色","深色",
     
 用户={
-enabled=正确, 
-匿名=假的, 
-回调=功能() 
+enabled=正确，
+匿名=假的,
+回调=功能()
 WindUI：通知({
-title="点吧",
-内容="不是你真点啊",
-持续时间=3
+标题="点吧"，"点吧",
+内容="不是你真点啊","不是你真点啊",
+持续时间=33
             })
-        结束
+结束
     },
-SidebarWidth=200, -- 修复：缺少宽度值
-ScrollBarEnabled=假的 
+SidebarWidth=200，--修复：缺少宽度值200, -- 修复：缺少宽度值
+ScrollBarEnabled=假的
 })
 
 窗口：标记({
-title="v1.0",
-color=Color3.fromHex("#30ff6a")
+标题="v1.0"，"v1.0",
+color=Color3.fromHex("#30ff6a")"#30ff6a")
 })
 
 窗口：标记({
-title="正式版", 
+标题="正式版"，"正式版", 
 color=Color3.fromHex("#315dff")
 })
 
